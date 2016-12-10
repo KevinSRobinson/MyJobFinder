@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-
+var errorHandler = require('./errorHandler')();
 var app = express();
 var jobModel = require('./models/Job');
 
@@ -9,7 +9,7 @@ app.set('view engine', 'jade');
 app.set('views', __dirname);
 
 app.use(express.static(__dirname + '/public/'));
-
+app.use(errorHandler.init);
 
 
 
