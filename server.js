@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var errorHandler = require('./errorHandler')();
 var app = express();
-var jobModel = require('./models/Job');
+var jobModel = require('./models/jJob');
 
 
 app.set('view engine', 'jade');
