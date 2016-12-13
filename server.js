@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var errorHandler = require('./errorHandler')();
 var app = express();
 var jobModel = require('./models/job');
-
+var jobsData = require('./jobs-data.js');
 
 app.set('view engine', 'jade');
 app.set('views', __dirname);
@@ -14,7 +14,7 @@ app.use(errorHandler.init);
 
 
 app.get('/api/jobs', function(req, res) {
-  mongoose.model('job').find({}).exec(function(error, collection) {
+  jobsData.findJobs.then(function(error, collection) {
     res.send(collection);
   });
 })
