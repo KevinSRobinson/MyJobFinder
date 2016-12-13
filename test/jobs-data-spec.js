@@ -12,17 +12,20 @@ function resetJobs() {
 
 var connectDB = Promise.promisify(mongoose.connect, mongoose);
 
+function findJobs(query){
+    return Promise.cast(mongoose.model('job').find(query).exec());
+}
 
 describe('get jobs', function() {
   it('Should neerr be empty', function(done) {
         connectDB('mongodb://localhost/jobfinder')
             .then(resetJobs)
             .then(jobModel.seedJobs)
-            .then(function() {
-              mongoose.model('job').find({}).exec(function(error, jobsList) {
+            .then(findJobs)
+            .then(function(jobsList) {
                 expect(jobsList.length).to.be.at.least(1);
                 done();
               });
-          });
+          
     });
 });
