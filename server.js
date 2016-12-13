@@ -14,7 +14,7 @@ app.use(errorHandler.init);
 
 
 app.get('/api/jobs', function(req, res) {
-  jobsData.findJobs.then(function(error, collection) {
+  jobsData.findJobs().then(function(collection) {
     res.send(collection);
   });
 })
