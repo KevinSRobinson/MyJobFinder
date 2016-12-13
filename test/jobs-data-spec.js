@@ -15,17 +15,14 @@ var connectDB = Promise.promisify(mongoose.connect, mongoose);
 
 describe('get jobs', function() {
   it('Should neerr be empty', function(done) {
-        connectDB('mongodb://localhost/jobfinder').then(function(){
-                resetJobs()
-             .then(jobModel.seedJobs)
-         .then(function() {
+        connectDB('mongodb://localhost/jobfinder')
+            .then(resetJobs)
+            .then(jobModel.seedJobs)
+            .then(function() {
               mongoose.model('job').find({}).exec(function(error, jobsList) {
-                  console.log(error);
-                  console.log(jobsList);
                 expect(jobsList.length).to.be.at.least(1);
                 done();
               });
           });
-        });
     });
 });
