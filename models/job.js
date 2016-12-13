@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
 
 var jobSchema = mongoose.Schema({
   title: {
@@ -32,14 +33,17 @@ var jobs = [
 
 exports.seedJobs = function() {
 
-  job.find({}).exec(function(error, collection) {
 
-    if (collection.length === 0) {
-      job.create(jobs[0]);
-      job.create(jobs[1]);
-      job.create(jobs[2]);
-      job.create(jobs[3]);
-    }
+  return new Promise(function(resolve, reject) {
 
+    job.find({}).exec(function(error, collection) {
+      if (collection.length === 0) {
+        job.create(jobs[0]);
+        job.create(jobs[1]);
+        job.create(jobs[2]);
+        job.create(jobs[3], resolve);
+      }
+    });
   });
-}
+};
+
