@@ -31,19 +31,21 @@ var jobs = [
   }
 ];
 
+
+function findJobs(query){
+    return Promise.cast(mongoose.model('job').find(query).exec());
+}
+
+var createJob = Promise.promisify(job.create, job);
+
 exports.seedJobs = function() {
 
-
-  return new Promise(function(resolve, reject) {
-
-    job.find({}).exec(function(error, collection) {
+  return  findJobs({}).then(function(collection) {
       if (collection.length === 0) {
-        job.create(jobs[0]);
-        job.create(jobs[1]);
-        job.create(jobs[2]);
-        job.create(jobs[3], resolve);
+        return Promise.map(jobs, function(job){
+          return createJob(job);
+        })
       }
     });
-  });
+  
 };
-
